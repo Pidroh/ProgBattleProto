@@ -1,12 +1,41 @@
 ﻿var display;
+var mouseX = 0;
+var mouseY = 0;
+var canDraw = false;
+var chars = [];
+var foreground = [];
+var background = [];
 
 window.onload = function () {
     // Check if rot.js can work on this browser
     if (!ROT.isSupported()) {
         alert("The rot.js library isn't supported by your browser.");
     } else {
+        var tileSet = document.createElement("img");
+        tileSet.src = "nonbridge/Yayo_c64.png";
+        tileSet.onload = function () {
+            canDraw = true;
+        }
+        map = [];
+        for (var i = 0; i < 16; i++) {
+            for (var j = 0; j < 16; j++) {
+                var char = j * 16 + i;
+                char = String.fromCharCode(char)
+                map[char] = [i * 17, j * 17];
+                //alert(i+"-"+j+" "+char);
+            }
+        }
+        alert(map)
+        display = new ROT.Display({
+            width: 70, height: 25, bg: "#1f2026", fontSize: 12,
+            //forceSquareRatio: true,
+            layout: "tile",
+            bg: "transparent",
+            tileWidth: 16, tileHeight: 17, tileSet: tileSet, tileMap: map,
+            tileColorize:true
 
-        display = new ROT.Display({ width: 70, height: 25, bg: "#1f2026", fontSize: 12 });
+        });
+        
         var fontsize = display.computeFontSize(screen.availWidth * 0.7, screen.availHeight * 0.7);
         display.setOptions({ fontSize: fontsize });
         var container = display.getContainer();
@@ -15,6 +44,13 @@ window.onload = function () {
         //cc = document.createElement("div");
         console.log(cc);
         cc.appendChild(container);
+
+        cc.onmousemove = function (event)
+        {
+            pos = display.eventToPosition(event);
+            mouseX = pos[0];
+            mouseY = pos[1];
+        };
         
         // Add the container to our HTML page
         //document.body.appendChild(container);
@@ -43,12 +79,25 @@ function clear()
     }
 }
 
+function getMouseX()
+{
+    return mouseX;
+
+}
+
+function getMouseY() {
+    return mouseY;
+}
+
 function draw(x, y, colorT, colorB, text)
 {
     //alert(text);
     //alert(x + y + colorT + colorB + text);
     //console.log(colorT);
-    if(display)
-        display.draw(x, y, text,colorT, colorB);
+    
+    if (display && canDraw) {
+        display.draw(x, y, text, colorT, colorB);
+    }
+        
     
 }
