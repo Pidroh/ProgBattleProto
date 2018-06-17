@@ -1,4 +1,5 @@
 ﻿canvas {
+    transform: scale(0.6);
     padding: 0;
     margin: auto;
     display: block;
@@ -7,4 +8,14 @@
     bottom: 0;
     left: 0;
     right: 0;
+}
+#canvas-container {
+    
+    //transform-origin: 0 0;
+    // add prefixed versions too.
+}
+
+@font-face {
+    font-family: 'KulminoituvaRegular';
+    src: url('http://www.miketaylr.com/f/kulminoituva.ttf');
 }

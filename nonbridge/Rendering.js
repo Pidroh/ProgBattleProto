@@ -25,18 +25,30 @@ window.onload = function () {
                 //alert(i+"-"+j+" "+char);
             }
         }
-        alert(map)
+        //alert(map)
+        var w = 60;
+        var h = 46;
+        var tileWidth = 16
+        var tileHeight = 17;
         display = new ROT.Display({
-            width: 70, height: 25, bg: "#1f2026", fontSize: 12,
+            width: w, height: h, bg: "#1f2026", fontSize: 6,
+            //fontFamily: "Roboto"
             //forceSquareRatio: true,
             layout: "tile",
             bg: "transparent",
-            tileWidth: 16, tileHeight: 17, tileSet: tileSet, tileMap: map,
+            tileWidth: tileWidth, tileHeight: tileHeight, tileSet: tileSet, tileMap: map,
             tileColorize:true
 
         });
-        
+        var necessaryWidth = w * tileWidth;
+        var necessaryHeight = h * tileHeight;
+        var scaleX = screen.availWidth / necessaryWidth;
+        var scaleY = screen.availHeight / necessaryHeight;
+        var minScale = scaleX;
+        if (minScale > scaleY) minScale = scaleY;
+        minScale *= 0.7;
         var fontsize = display.computeFontSize(screen.availWidth * 0.7, screen.availHeight * 0.7);
+        
         display.setOptions({ fontSize: fontsize });
         var container = display.getContainer();
         //container.setAttribute("align", "center");
@@ -45,13 +57,14 @@ window.onload = function () {
         console.log(cc);
         cc.appendChild(container);
 
+        container.style.transform = "scale(" + minScale + ")";
+
         cc.onmousemove = function (event)
         {
             pos = display.eventToPosition(event);
             mouseX = pos[0];
             mouseY = pos[1];
         };
-        
         // Add the container to our HTML page
         //document.body.appendChild(container);
         var foreground, background, colors;
@@ -87,6 +100,10 @@ function getMouseX()
 
 function getMouseY() {
     return mouseY;
+}
+
+function isReadyToDraw() {
+    return canDraw;
 }
 
 function draw(x, y, colorT, colorB, text)
