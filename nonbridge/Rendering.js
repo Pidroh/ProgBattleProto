@@ -6,6 +6,8 @@ var chars = [];
 var foreground = [];
 var background = [];
 
+
+
 window.onload = function () {
     // Check if rot.js can work on this browser
     if (!ROT.isSupported()) {
