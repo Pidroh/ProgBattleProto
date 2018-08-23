@@ -28,7 +28,7 @@ window.onload = function () {
             }
         }
         //alert(map)
-        var w = 60;
+        var w = 35;
         var h = 46;
         var tileWidth = 16
         var tileHeight = 17;
