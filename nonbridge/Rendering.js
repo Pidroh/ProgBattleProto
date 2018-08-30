@@ -63,8 +63,14 @@ window.onload = function () {
 
         cc.onmousemove = function (event)
         {
+            
             pos = display.eventToPosition(event);
-            mouseX = pos[0];
+            if (mouseX != pos[0])
+            {
+                mouseX = pos[0];
+                
+            }
+            
             mouseY = pos[1];
         };
         // Add the container to our HTML page
